@@ -26,9 +26,16 @@ RUN apt-get update && \
 RUN apt-get clean; \
     rm -rf /var/lib/apt/lists/*
 
-# Configure zip first
-RUN docker-php-ext-configure zip \
-    --with-libzip
+# Install extensions
+# Make it readable and arrange from A-Z
+RUN docker-php-ext-install \
+    exif \
+    gd \
+    mbstring \
+    pdo_mysql \
+    pdo_pgsql \
+    pcntl \
+    zip
 
 # Configure gd first
 RUN docker-php-ext-configure gd \
@@ -36,15 +43,10 @@ RUN docker-php-ext-configure gd \
     --with-jpeg-dir=/usr/include/ \
     --with-png-dir=/usr/include/
 
-# Install extensions
-# Make it readable and arrange from A-Z
-RUN docker-php-ext-install \
-    exif \
-    mbstring \
-    pdo_mysql \
-    pdo_pgsql \
-    pcntl \
-    zip
+# Configure zip first
+RUN docker-php-ext-configure zip \
+    --with-libzip
+
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
