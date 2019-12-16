@@ -20,6 +20,7 @@ RUN apt-get update && \
     libjpeg-dev \
     libpng-dev \
     libpq-dev \
+    libxml2-dev \
     sqlite3
 
 # Clear cache
@@ -29,12 +30,14 @@ RUN apt-get clean; \
 # Install extensions
 # Make it readable and arrange from A-Z
 RUN docker-php-ext-install \
+    bcmath \
     exif \
     gd \
     mbstring \
     pdo_mysql \
     pdo_pgsql \
     pcntl \
+    soap \
     zip
 
 # Configure gd first
